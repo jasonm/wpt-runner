@@ -8,6 +8,5 @@ CREATE DATABASE wptrunner_development WITH TEMPLATE = template0 ENCODING = 'UTF8
 
 \connect wptrunner_development
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE TABLE runs(uuid UUID PRIMARY KEY DEFAULT uuid_generate_v1(), data JSON);
+CREATE TABLE tests(id SERIAL PRIMARY KEY, server VARCHAR(255), label VARCHAR(255), test_id VARCHAR(255), status VARCHAR(255));
+CREATE TABLE results(id SERIAL PRIMARY KEY, data JSON);
