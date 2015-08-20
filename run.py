@@ -1,29 +1,15 @@
 #!/usr/bin/env python -Wignore
-from dotenv import load_dotenv
 from uuid import uuid1
 import datetime
 import os
-import psycopg2
-import urlparse
 import sh
 import json
-import logging
-import sys
 
-# logging
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-logger = logging.getLogger()
+import status
+import commons
 
-# dotenv
-dotenv_path = os.path.join(os.path.dirname(os.path.realpath('__file__')), '.env')
-load_dotenv(dotenv_path)
-
-# database
-urlparse.uses_netloc.append('postgres')
-url = urlparse.urlparse(os.environ['DATABASE_URL'])
-conn = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
-conn.set_session(autocommit=True)
-db = conn.cursor()
+logger = commons.logger
+db = commons.db
 
 common_options = {
   # Shared test options
@@ -85,6 +71,6 @@ for test_config in test_configs:
         logger.error("Error enqueuing webpagetest: %s" % output)
         continue
 
-    save_test(server=options['server'], label=run_label, test_id=output['data']['testId'], status=output['statusText'])
+    save_test(server=options['server'], label=run_label, test_id=output['data']['testId'], status=status.STARTED)
 
     logger.info("Saved!")
