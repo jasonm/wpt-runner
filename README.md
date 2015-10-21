@@ -1,8 +1,8 @@
-See work in main.py
+See work in `run.py` and `poller.py`.
 
-Core functionality:
+Proposed core functionality:
 
-1. Initiate runs
-2. Download and persist run data
-3. Show charts
-4. Cron runs
+1. Enqueue WPT runs (cron/heroku scheduler/etc)
+2. Poll WPT for completion
+3. Download and persist run data
+4. Show charts
